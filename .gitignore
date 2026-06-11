@@ -1,0 +1,20 @@
+# Data — never commit the raw dataset
+ml/data/
+*.csv
+*.npy
+
+# Python
+__pycache__/
+*.pyc
+.env
+venv/
+*.egg-info/
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Models (large files)
+ml/models/
+*.onnx
+*.pt
+*.pth

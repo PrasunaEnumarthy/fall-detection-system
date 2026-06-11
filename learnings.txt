@@ -1,0 +1,10 @@
+Git tracks files, not folders.
+
+If a folder is empty, Git ignores it.
+The solution: .gitkeep
+
+Create a tiny empty file called .gitkeep inside each folder.
+
+Example:
+
+-------------------------------------
