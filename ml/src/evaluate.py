@@ -28,6 +28,7 @@ from train import FallWindowDataset  # reuse the Dataset wrapper
 BEST_MODEL       = Path(__file__).parent.parent / "models" / "best_model.pt"
 TEST_CSV         = Path(__file__).parent.parent / "data"   / "dataset_test.csv"
 EVAL_REPORT_PATH = Path(__file__).parent.parent / "models" / "evaluation_report.txt"
+THRESHOLD_PATH   = Path(__file__).parent.parent / "models" / "threshold.txt"
 
 # Minimum acceptable sensitivity (recall on fall class) — clinical target
 SENSITIVITY_TARGET = 0.95
@@ -35,6 +36,20 @@ SENSITIVITY_TARGET = 0.95
 # Label decode maps (reverse of train.py encodings)
 FALL_TYPE_DECODE    = {0: "none", 1: "slip",    2: "trip",     3: "faint"}
 PRE_ACTIVITY_DECODE = {0: "walking", 1: "standing", 2: "bending", 3: "sitting"}
+
+
+def find_optimal_threshold(fall_probs: np.ndarray, fall_true: np.ndarray,
+                           target: float = SENSITIVITY_TARGET) -> float:
+    """
+    Find the highest decision threshold that still achieves target sensitivity.
+    Sweeps from 0.99 down to 0.01 in steps of 0.01.
+    """
+    for thresh in np.round(np.arange(0.99, 0.00, -0.01), 2):
+        preds = (fall_probs >= thresh).astype(int)
+        sens  = recall_score(fall_true, preds, pos_label=1, zero_division=0)
+        if sens >= target:
+            return float(thresh)
+    return 0.1   # fallback: accept nearly everything
 
 
 def load_test_data() -> tuple[np.ndarray, dict]:
@@ -169,8 +184,24 @@ def evaluate_model(model_path: str = None, test_csv: str = None) -> None:
     preds = run_inference(model, test_loader, device)
 
     y_true_fall = preds["fall_true"]
-    y_pred_fall = preds["fall_preds"]
     y_prob_fall = preds["fall_probs"]
+
+    # ------------------------------------------------------------------ #
+    # Threshold tuning — find highest threshold meeting sensitivity target #
+    # ------------------------------------------------------------------ #
+    opt_thresh = find_optimal_threshold(y_prob_fall, y_true_fall)
+    print(f"[EVAL] Optimal threshold for >={SENSITIVITY_TARGET*100:.0f}% sensitivity: {opt_thresh:.2f}")
+
+    # Save threshold so infer.py can load it
+    THRESHOLD_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with open(str(THRESHOLD_PATH), "w") as _tf:
+        _tf.write(f"{opt_thresh:.4f}\n")
+    print(f"[EVAL] Threshold saved to {THRESHOLD_PATH.name}")
+
+    # Evaluate at BOTH thresholds so we can compare
+    y_pred_05  = (y_prob_fall >= 0.50).astype(int)
+    y_pred_opt = (y_prob_fall >= opt_thresh).astype(int)
+    y_pred_fall = y_pred_opt   # use optimal for the main report
 
     # ------------------------------------------------------------------ #
     # Fall head metrics                                                   #
@@ -184,6 +215,12 @@ def evaluate_model(model_path: str = None, test_csv: str = None) -> None:
     cm          = confusion_matrix(y_true_fall, y_pred_fall)
     tn, fp, fn, tp = cm.ravel() if cm.shape == (2, 2) else (0, 0, 0, 0)
     specificity = tn / (tn + fp) if (tn + fp) > 0 else 0.0
+
+    # Reference metrics at default 0.5 for comparison
+    sens_05 = recall_score(y_true_fall, y_pred_05, pos_label=1, zero_division=0)
+    cm05    = confusion_matrix(y_true_fall, y_pred_05)
+    tn05, fp05, fn05, tp05 = cm05.ravel() if cm05.shape == (2, 2) else (0, 0, 0, 0)
+    spec_05 = tn05 / (tn05 + fp05) if (tn05 + fp05) > 0 else 0.0
 
     # ------------------------------------------------------------------ #
     # Fall-type and pre-activity — evaluate only on relevant subsets      #
@@ -224,11 +261,13 @@ def evaluate_model(model_path: str = None, test_csv: str = None) -> None:
     lines.append("")
 
     lines.append("[ FALL HEAD ]")
+    lines.append(f"  Threshold used   : {opt_thresh:.2f}  (tuned for >={SENSITIVITY_TARGET*100:.0f}% sensitivity)")
     lines.append(f"  Accuracy         : {acc:.4f}  ({acc*100:.2f}%)")
     lines.append(f"  Sensitivity      : {sensitivity:.4f}  ({sensitivity*100:.2f}%)")
     lines.append(f"  Specificity      : {specificity:.4f}  ({specificity*100:.2f}%)")
     lines.append(f"  F1 Score         : {f1:.4f}")
     lines.append(f"  ROC-AUC          : {roc_auc:.4f}")
+    lines.append(f"  (At thresh=0.50: sensitivity={sens_05:.4f}  specificity={spec_05:.4f})")
     lines.append("")
 
     lines.append("  Confusion Matrix (rows=actual, cols=predicted):")

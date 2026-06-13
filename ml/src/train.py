@@ -13,9 +13,10 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 
-# Sibling module — works when run from ml/src/ or ml/
+# Sibling modules — works when run from ml/src/ or ml/
 sys.path.insert(0, str(Path(__file__).parent))
-from model import FallDetectorCNN_LSTM
+from model   import FallDetectorCNN_LSTM
+from augment import augment_window
 
 # ------------------------------------------------------------------ #
 # Paths (relative to ml/)                                            #
@@ -42,9 +43,9 @@ PRE_ACTIVITY_ENC: dict[str, int] = {
 # Hyper-parameters                                                   #
 # ------------------------------------------------------------------ #
 BATCH_SIZE   = 32
-N_EPOCHS     = 20
+N_EPOCHS     = 30   # increased from 20 — larger augmented dataset needs more passes
 LR           = 1e-3
-LR_PATIENCE  = 3   # ReduceLROnPlateau patience (epochs without val improvement)
+LR_PATIENCE  = 5   # increased from 3 — give LR more time before reducing
 
 # Weights for the combined loss
 W_FALL_TYPE    = 0.8
@@ -235,6 +236,35 @@ def compute_loss(
     return total
 
 
+def augment_training_set(X_train: np.ndarray, labels_train: dict) -> tuple[np.ndarray, dict]:
+    """Apply 6-way augmentation to every fall window, producing 7x more fall examples."""
+    fall_mask = labels_train["fall"] == 1
+    fall_idx  = np.where(fall_mask)[0]
+
+    aug_X: list[np.ndarray] = []
+    aug_labels: dict = {k: [] for k in labels_train}
+
+    for idx in fall_idx:
+        window = X_train[idx].reshape(200, 6)
+        for aug_win in augment_window(window):        # returns 6 (200,6) arrays
+            aug_X.append(aug_win.flatten())
+            for k in labels_train:
+                aug_labels[k].append(labels_train[k][idx])
+
+    aug_X_np      = np.array(aug_X, dtype=np.float32)
+    aug_labels_np = {k: np.array(v, dtype=labels_train[k].dtype) for k, v in aug_labels.items()}
+
+    X_aug      = np.vstack([X_train, aug_X_np])
+    labels_aug = {k: np.concatenate([labels_train[k], aug_labels_np[k]]) for k in labels_train}
+
+    n_fall = len(fall_idx)
+    n_adl  = int((~fall_mask).sum())
+    print(f"[AUG] Before: {len(X_train):,}  (fall: {n_fall:,}  ADL: {n_adl:,})")
+    print(f"[AUG] After : {len(X_aug):,}  (fall: {n_fall * 7:,}  ADL: {n_adl:,})")
+
+    return X_aug, labels_aug
+
+
 def train_epoch(model, loader, optimizer, bce, ce, device) -> float:
     """Run one training epoch and return mean loss."""
     model.train()
@@ -290,6 +320,12 @@ def train() -> None:
     # ------------------------------------------------------------------ #
     X, labels = load_data()
     X_train, X_val, X_test, l_train, l_val, l_test, idx_test = split_data(X, labels)
+
+    # ------------------------------------------------------------------ #
+    # Augment training set (fall windows only)                            #
+    # ------------------------------------------------------------------ #
+    print("\n[TRAIN] Augmenting fall windows in training set ...")
+    X_train, l_train = augment_training_set(X_train, l_train)
 
     # ------------------------------------------------------------------ #
     # DataLoaders                                                         #

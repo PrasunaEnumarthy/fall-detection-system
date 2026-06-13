@@ -41,8 +41,25 @@ PRE_ACTIVITY_IDX: dict[int, str] = {
 # ------------------------------------------------------------------ #
 # ONNX model path                                                     #
 # ------------------------------------------------------------------ #
-ONNX_PATH   = Path(__file__).parent.parent / "models" / "model.onnx"
-DATASET_CSV = Path(__file__).parent.parent / "data"   / "dataset.csv"
+ONNX_PATH      = Path(__file__).parent.parent / "models" / "model.onnx"
+DATASET_CSV    = Path(__file__).parent.parent / "data"   / "dataset.csv"
+THRESHOLD_PATH = Path(__file__).parent.parent / "models" / "threshold.txt"
+
+
+def _load_threshold() -> float:
+    """Load optimal decision threshold saved by evaluate.py; default 0.5."""
+    if THRESHOLD_PATH.exists():
+        try:
+            val = float(THRESHOLD_PATH.read_text().strip())
+            print(f"[INFER] Loaded decision threshold: {val:.2f}")
+            return val
+        except ValueError:
+            pass
+    print("[INFER] threshold.txt not found — using default 0.5")
+    return 0.5
+
+
+FALL_THRESHOLD = _load_threshold()
 
 # Stillness thresholds (same as labeller.py)
 _STILLNESS_UNCONSCIOUS = 0.85
@@ -118,7 +135,7 @@ def run_inference(window: np.ndarray) -> dict | None:
     fall_prob = float(fall_raw[0, 0])
 
     # No fall detected — skip silently
-    if fall_prob < 0.5:
+    if fall_prob < FALL_THRESHOLD:
         return None
 
     # Determine fall type from argmax of logits
@@ -273,7 +290,7 @@ def run_simulation(dataset_csv: str = None) -> None:
         result = run_inference(window)
 
         if result is None:
-            # Model didn't fire on this window (fall_prob < 0.5)
+            # Model didn't fire on this window (fall_prob < FALL_THRESHOLD)
             alerts_skipped += 1
             continue
 
@@ -292,7 +309,7 @@ def run_simulation(dataset_csv: str = None) -> None:
     print(f"\n[INFER] Simulation complete.")
     print(f"  Total fall windows : {len(fall_df):,}")
     print(f"  Alerts sent        : {alerts_sent:,}")
-    print(f"  Skipped (conf<0.5) : {alerts_skipped:,}")
+    print(f"  Skipped (conf<{FALL_THRESHOLD:.2f}) : {alerts_skipped:,}")
 
 
 # ---------------------------------------------------------------------------

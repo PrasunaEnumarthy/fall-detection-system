@@ -46,7 +46,7 @@ def time_warp(window: np.ndarray, factor: float) -> np.ndarray:
     Stretch or compress the temporal axis using interpolation.
 
     factor < 1 compresses the signal (fast motion), factor > 1 stretches it (slow motion).
-    The output is always resampled back to the original 200 timesteps.
+    The output is always the same number of timesteps as the input.
 
     This simulates different fall speeds and movement tempos across subjects.
 
@@ -62,26 +62,26 @@ def time_warp(window: np.ndarray, factor: float) -> np.ndarray:
     np.ndarray
         Shape (200, 6) float32.
     """
-    n_timesteps = window.shape[0]
+    n = window.shape[0]
+    n_warped = max(2, int(n * factor))
 
-    # Original time axis [0, 1]
-    t_original = np.linspace(0, 1, n_timesteps)
+    t_orig   = np.linspace(0, 1, n)
+    t_warped = np.linspace(0, 1, n_warped)
 
-    # Warped time axis — factor < 1 → fewer source points (compressed)
-    n_warped   = max(10, int(n_timesteps * factor))  # guard against too few points
-    t_warped   = np.linspace(0, 1, n_warped)
-
-    warped = np.zeros_like(window, dtype=np.float32)
-
-    # Interpolate each channel independently
+    # Resample the original n-point signal to n_warped points
+    warped = np.zeros((n_warped, window.shape[1]), dtype=np.float32)
     for ch in range(window.shape[1]):
-        # Build interpolator from the warped source
-        interp_fn = interp1d(t_warped, window[:n_warped, ch], kind="linear",
-                             fill_value="extrapolate")
-        # Re-sample back to the original 200 time points
-        warped[:, ch] = interp_fn(t_original).astype(np.float32)
+        f = interp1d(t_orig, window[:, ch], kind="linear",
+                     bounds_error=False, fill_value=(window[0, ch], window[-1, ch]))
+        warped[:, ch] = f(t_warped).astype(np.float32)
 
-    return warped
+    # Crop (factor > 1: only the first n samples of the stretched signal)
+    if n_warped >= n:
+        return warped[:n, :]
+
+    # Pad (factor < 1: motion completed early, repeat last frame to fill window)
+    pad = np.tile(warped[-1:, :], (n - n_warped, 1))
+    return np.vstack([warped, pad]).astype(np.float32)
 
 
 def axis_flip(window: np.ndarray) -> np.ndarray:
