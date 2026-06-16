@@ -1,0 +1,83 @@
+/* Global styles — CSS custom properties, resets, typography, scrollbar, and the slideIn animation for new alert cards. */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:              #F4F1EC;
+  --surface:         #FAFAF8;
+  --surface-2:       #F0EDE6;
+  --border:          #E2DDD6;
+  --border-light:    #EDE9E3;
+  --text:            #1C1917;
+  --text-muted:      #78716C;
+  --text-dim:        #A8A29E;
+
+  --critical:        #B91C1C;
+  --critical-bg:     #FEF2F2;
+  --critical-border: #FECACA;
+
+  --high:            #C2610C;
+  --high-bg:         #FFF7ED;
+  --high-border:     #FED7AA;
+
+  --medium:          #A16207;
+  --medium-bg:       #FEFCE8;
+  --medium-border:   #FEF08A;
+
+  --low:             #166534;
+  --low-bg:          #F0FDF4;
+  --low-border:      #BBF7D0;
+
+  --accent:          #44403C;
+  --font-mono:       'IBM Plex Mono', monospace;
+  --font-display:    'DM Serif Display', serif;
+  --font-body:       'DM Sans', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
