@@ -28,24 +28,33 @@ export async function initDatabase() {
 
   db.run(`
     CREATE TABLE IF NOT EXISTS alerts (
-      id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      timestamp   TEXT    NOT NULL,
-      fall_type   TEXT    NOT NULL,
-      pre_activity TEXT   NOT NULL,
-      post_state  TEXT    NOT NULL,
-      severity    TEXT    NOT NULL,
-      message     TEXT    NOT NULL,
-      confidence  REAL    NOT NULL,
-      created_at  TEXT    DEFAULT (datetime('now'))
+      id                     INTEGER PRIMARY KEY AUTOINCREMENT,
+      timestamp              TEXT    NOT NULL,
+      fall_type              TEXT    NOT NULL,
+      pre_activity           TEXT    NOT NULL,
+      post_state             TEXT    NOT NULL,
+      severity               TEXT    NOT NULL,
+      message                TEXT    NOT NULL,
+      confidence             REAL    NOT NULL,
+      confirmation_window_ms INTEGER,
+      created_at             TEXT    DEFAULT (datetime('now'))
     )
   `);
+
+  // Migration for databases created before confirmation_window_ms was added.
+  // SQLite's ALTER TABLE ADD COLUMN has no IF NOT EXISTS, so we swallow the
+  // "duplicate column" error that fires when the column already exists.
+  try {
+    db.run(`ALTER TABLE alerts ADD COLUMN confirmation_window_ms INTEGER`);
+  } catch (_) { /* column already present — nothing to do */ }
+
   persist();
 }
 
 export function insertAlert(alert) {
   const stmt = db.prepare(`
-    INSERT INTO alerts (timestamp, fall_type, pre_activity, post_state, severity, message, confidence)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO alerts (timestamp, fall_type, pre_activity, post_state, severity, message, confidence, confirmation_window_ms)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `);
   stmt.run([
     alert.timestamp,
@@ -55,6 +64,7 @@ export function insertAlert(alert) {
     alert.severity,
     alert.message,
     alert.confidence,
+    alert.confirmation_window_ms ?? null,   // null for alerts without the confirmation feature
   ]);
   stmt.free();
   persist();

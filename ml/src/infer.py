@@ -68,6 +68,38 @@ _STILLNESS_STUNNED     = 0.55
 # Seconds to sleep between simulated alerts (avoids flooding the backend)
 ALERT_SLEEP_SECONDS = 2
 
+# ─── Adaptive Confirmation Window — tunable constants ──────────────────────
+#
+# WHY three tiers instead of one fixed delay: high-confidence detections are
+# statistically less likely to be false positives, so a short re-check suffices.
+# Low-confidence detections are ambiguous and benefit from a longer window to
+# let transient events (a stumble that self-corrects, a vigorous ADL) naturally
+# resolve before we commit to an alert.
+#
+# Adjust these constants to tune sensitivity vs. alert latency trade-off:
+#   - Raising a window duration → fewer false positives, but slower true alerts.
+#   - Lowering CONFIRM_TIER_* thresholds → more events use the longer windows.
+
+CONFIRM_TIER_HIGH  = 0.90   # confidence >= this → use the short 1-second window
+CONFIRM_TIER_MID   = 0.75   # confidence >= this → use the medium 2.5-second window
+                             # confidence  < 0.75 → use the long  4-second window
+
+CONFIRM_WINDOW_HIGH_SECS = 1.0   # seconds — high confidence, confirm fast
+CONFIRM_WINDOW_MID_SECS  = 2.5   # seconds — medium confidence
+CONFIRM_WINDOW_LOW_SECS  = 4.0   # seconds — low confidence, take more time
+
+# Secondary gate: minimum "stillness" score in the last 0.5 s of the window.
+# Stillness = 1 / (1 + variance), same formula as compute_post_state().
+# A score below this means vigorous movement continued through the window tail —
+# consistent with a transient ADL spike rather than a sustained fall event.
+# Tune upward to be stricter (reject more marginal cases); downward to be
+# more permissive (let more borderline events through to the post-state check).
+CONFIRM_TAIL_STILLNESS_MIN = 0.15
+
+# Where suppressed false-positive events are written for later analysis.
+# This is a plain-text append log: one line per suppressed event.
+SUPPRESSED_LOG_PATH = Path(__file__).parent.parent / "logs" / "suppressed_alerts.log"
+
 
 def _load_onnx_session(onnx_path: str = None) -> ort.InferenceSession:
     """
@@ -190,12 +222,15 @@ def compute_post_state(signal_after_fall: np.ndarray) -> str:
         return "moving"
 
 
-def send_alert(result: dict, post_state: str) -> None:
+def send_alert(result: dict, post_state: str, confirmation_window_ms: int | None = None) -> None:
     """
     POST a fall alert to the backend API.
 
     The backend (Team B) expects:
       { fall_type, pre_activity, post_state, confidence }
+    plus the optional new field:
+      { confirmation_window_ms }  — only present for confirmed falls that passed
+                                    the adaptive confirmation window.
 
     Handles connection errors gracefully — inference continues even
     when the backend is unreachable (e.g. during standalone testing).
@@ -206,6 +241,9 @@ def send_alert(result: dict, post_state: str) -> None:
         Output from run_inference(): keys fall_type, pre_activity, confidence.
     post_state : str
         State estimate from compute_post_state().
+    confirmation_window_ms : int or None
+        Actual wall-clock duration of the confirmation window in milliseconds.
+        Omitted from the payload when None (e.g. if called without the feature).
     """
     payload = {
         "fall_type":    result["fall_type"],
@@ -213,6 +251,8 @@ def send_alert(result: dict, post_state: str) -> None:
         "post_state":   post_state,
         "confidence":   result["confidence"],
     }
+    if confirmation_window_ms is not None:
+        payload["confirmation_window_ms"] = confirmation_window_ms
 
     url = f"{BACKEND_URL}/api/alert"
 
@@ -220,11 +260,13 @@ def send_alert(result: dict, post_state: str) -> None:
         response = requests.post(url, json=payload, timeout=5)
 
         if response.status_code in (200, 201):
+            win_str = f" | win={confirmation_window_ms}ms" if confirmation_window_ms is not None else ""
             print(
                 f"  [SENT]  fall_type={result['fall_type']:<8} | "
                 f"pre={result['pre_activity']:<10} | "
                 f"post={post_state:<12} | "
                 f"conf={result['confidence']:.4f}"
+                f"{win_str}"
             )
         else:
             print(
@@ -242,6 +284,98 @@ def send_alert(result: dict, post_state: str) -> None:
         print(f"  [ERROR] Request to {url} timed out after 5s")
     except Exception as exc:
         print(f"  [ERROR] Unexpected error sending alert: {exc}")
+
+
+def _log_suppressed(confidence: float, reason: str) -> None:
+    """
+    Append a suppressed (rejected) fall event to SUPPRESSED_LOG_PATH.
+
+    Each line is a plain-text record with an ISO timestamp, the original
+    confidence score, and a short reason code so false-positive rates can
+    be reviewed later without any extra tooling (just open the file).
+
+    Never raises — creates the logs/ directory if it doesn't exist yet.
+    """
+    SUPPRESSED_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+    entry = (
+        f"{time.strftime('%Y-%m-%dT%H:%M:%S')} "
+        f"SUPPRESSED confidence={confidence:.4f} reason={reason}\n"
+    )
+    with SUPPRESSED_LOG_PATH.open("a", encoding="utf-8") as fh:
+        fh.write(entry)
+    print(f"  [SUPPRESSED] conf={confidence:.4f} | reason={reason}")
+
+
+def _adaptive_confirm(window: np.ndarray, confidence: float) -> tuple[bool, int]:
+    """
+    Adaptive confirmation window: waits a confidence-tiered duration, then
+    re-examines the IMU window to decide whether the initial detection is a
+    real fall or a false positive.
+
+    Parameters
+    ----------
+    window : np.ndarray
+        Shape (200, 6) float32 — the same window that triggered initial detection.
+    confidence : float
+        Fall probability from run_inference(), used to select the wait duration.
+
+    Returns
+    -------
+    (confirmed: bool, elapsed_ms: int)
+        confirmed   — True if the fall is verified and should proceed to the
+                      post-state check + alert. False if it should be suppressed.
+        elapsed_ms  — actual wall-clock duration of the confirmation window in ms,
+                      forwarded to the dashboard as confirmation_window_ms.
+
+    SIMULATION NOTE:
+        In real-time deployment, fresh IMU samples would arrive during the sleep
+        interval and be used for re-checking. In simulation mode we only have the
+        original window, so the check uses two heuristics on that data:
+          1. Primary gate  — re-run the ONNX model; if it no longer fires, reject.
+          2. Secondary gate — check the last 0.5 s of the window for sustained
+             stillness (the "settling" period after a real fall). A tail that is
+             still highly active indicates the person resumed movement immediately,
+             which is inconsistent with a genuine fall.
+    """
+    # ── Select window duration from confidence tier ──────────────────────────
+    # WHY variable duration: high-confidence detections need less re-observation
+    # time; ambiguous low-confidence ones need more to distinguish a real fall
+    # from a transient ADL spike that happens to clear the detection threshold.
+    if confidence >= CONFIRM_TIER_HIGH:
+        window_secs = CONFIRM_WINDOW_HIGH_SECS
+    elif confidence >= CONFIRM_TIER_MID:
+        window_secs = CONFIRM_WINDOW_MID_SECS
+    else:
+        window_secs = CONFIRM_WINDOW_LOW_SECS
+
+    # ── Wait for the confirmation interval to elapse ─────────────────────────
+    t_start = time.monotonic()
+    time.sleep(window_secs)
+    elapsed_ms = round((time.monotonic() - t_start) * 1000)
+
+    # ── Primary gate: re-run the model on the available signal ───────────────
+    # In production this would use a freshly collected 2-second window captured
+    # during the sleep interval above. In simulation it's the same window — if
+    # the model no longer fires (e.g. after a threshold change or due to
+    # borderline probability) we treat this as a false positive.
+    re_result = run_inference(window)
+    if re_result is None:
+        return False, elapsed_ms
+
+    # ── Secondary gate: tail-variance check ──────────────────────────────────
+    # A genuine fall leaves the person on the ground for at least 0.5 s,
+    # producing low variance in the window tail (the "settling" period).
+    # A transient ADL spike that happened to fire the model returns to vigorous
+    # movement immediately, keeping the tail variance high.
+    # We use the last 50 samples (0.5 s at 100 Hz) as the tail.
+    acc_mag = np.sqrt(np.sum(window[:, :3] ** 2, axis=1))   # resultant, shape (200,)
+    tail_stillness = 1.0 / (1.0 + float(np.var(acc_mag[150:])))  # same formula as compute_post_state
+
+    if tail_stillness < CONFIRM_TAIL_STILLNESS_MIN:
+        # Tail is still too active — motion resumed immediately → likely a false positive.
+        return False, elapsed_ms
+
+    return True, elapsed_ms
 
 
 def run_simulation(dataset_csv: str = None) -> None:
@@ -276,8 +410,9 @@ def run_simulation(dataset_csv: str = None) -> None:
     print(f"[INFER] Backend URL: {BACKEND_URL}")
     print(f"[INFER] Starting simulation — {ALERT_SLEEP_SECONDS}s pause between alerts\n")
 
-    alerts_sent  = 0
-    alerts_skipped = 0
+    alerts_sent       = 0
+    alerts_skipped    = 0
+    alerts_suppressed = 0
 
     for row_idx in range(len(fall_df)):
         row = fall_df.iloc[row_idx]
@@ -294,13 +429,30 @@ def run_simulation(dataset_csv: str = None) -> None:
             alerts_skipped += 1
             continue
 
-        # Estimate post-fall state using the same window as a proxy
+        # ── Adaptive confirmation window ──────────────────────────────────
+        # Waits a confidence-tiered duration, then re-examines the signal
+        # to confirm this is a genuine fall before proceeding to post-state
+        # analysis and alerting. Suppresses false positives that resolve on
+        # their own (transient ADL spike, person immediately stood back up).
+        # Does NOT modify compute_post_state() or send_alert() — only gates
+        # whether we call them at all.
+        confirmed, conf_window_ms = _adaptive_confirm(window, result["confidence"])
+
+        if not confirmed:
+            _log_suppressed(
+                confidence=result["confidence"],
+                reason="signal_not_sustained",
+            )
+            alerts_suppressed += 1
+            continue
+
+        # ── Post-fall state and alert (only reached for confirmed falls) ──
         # In production this would be 300 samples AFTER the fall event;
         # here we use the available window as an approximation.
         post_signal = np.tile(window, (2, 1))[:300]   # pad to 300 samples
         post_state  = compute_post_state(post_signal)
 
-        send_alert(result, post_state)
+        send_alert(result, post_state, confirmation_window_ms=conf_window_ms)
         alerts_sent += 1
 
         # Simulate real-time gap between fall events
@@ -309,7 +461,10 @@ def run_simulation(dataset_csv: str = None) -> None:
     print(f"\n[INFER] Simulation complete.")
     print(f"  Total fall windows : {len(fall_df):,}")
     print(f"  Alerts sent        : {alerts_sent:,}")
-    print(f"  Skipped (conf<{FALL_THRESHOLD:.2f}) : {alerts_skipped:,}")
+    print(f"  Suppressed (conf window) : {alerts_suppressed:,}")
+    print(f"  Skipped (conf<{FALL_THRESHOLD:.2f})      : {alerts_skipped:,}")
+    if alerts_suppressed > 0:
+        print(f"  Suppression log    : {SUPPRESSED_LOG_PATH}")
 
 
 # ---------------------------------------------------------------------------

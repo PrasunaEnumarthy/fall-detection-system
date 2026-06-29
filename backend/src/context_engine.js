@@ -258,9 +258,8 @@ function buildMessage(fall_type, pre_activity, post_state, confidence) {
 //   5. Return everything as one flat object.
 // ─────────────────────────────────────────────────────────────────────────────
 export function buildAlert(raw) {
-  // Step 1: Pull out the four values from the ML model's output object.
-  // These are the only inputs this entire file needs to do its job.
-  const { fall_type, pre_activity, post_state, confidence } = raw;
+  // Step 1: Pull out the four ML output fields plus the optional confirmation field.
+  const { fall_type, pre_activity, post_state, confidence, confirmation_window_ms } = raw;
 
   // Step 2: Determine how urgent this alert is using the severity matrix.
   // This drives the colour coding on the dashboard (red = CRITICAL, orange = HIGH, yellow = MEDIUM).
@@ -277,7 +276,7 @@ export function buildAlert(raw) {
   // Step 5: Return the complete alert object.
   // All fields are stored in the DB. severity + message + timestamp are the three
   // fields that the caretaker dashboard prominently displays in the alerts panel.
-  return {
+  const alert = {
     timestamp,    // when it happened
     fall_type,    // how they fell — stored for filtering/stats in dashboard
     pre_activity, // what they were doing — stored for incident report generation
@@ -286,4 +285,14 @@ export function buildAlert(raw) {
     message,      // the sentence shown to the caretaker
     confidence,   // shown in the detail view so caretaker can judge reliability
   };
+
+  // confirmation_window_ms is only present on alerts that passed through the
+  // adaptive confirmation window (null/undefined for alerts from mock_emitter
+  // or older clients). We include it only when explicitly provided so the
+  // existing alert shape is unchanged for callers that don't send it.
+  if (confirmation_window_ms != null) {
+    alert.confirmation_window_ms = confirmation_window_ms;
+  }
+
+  return alert;
 }

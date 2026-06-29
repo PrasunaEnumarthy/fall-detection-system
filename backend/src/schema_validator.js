@@ -65,5 +65,16 @@ export function validateAlert(alert) {
     errors.push(`confidence ${alert.confidence} must be between 0.0 and 1.0`);
   }
 
+  // confirmation_window_ms — optional; only present for alerts that passed through
+  // the adaptive confirmation window. When absent the alert is still valid (e.g.
+  // alerts from mock_emitter or direct test POSTs).
+  if (alert.confirmation_window_ms !== undefined && alert.confirmation_window_ms !== null) {
+    if (!Number.isInteger(alert.confirmation_window_ms)) {
+      errors.push('confirmation_window_ms must be an integer');
+    } else if (alert.confirmation_window_ms < 0) {
+      errors.push(`confirmation_window_ms ${alert.confirmation_window_ms} must be non-negative`);
+    }
+  }
+
   return { valid: errors.length === 0, errors };
 }

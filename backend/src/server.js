@@ -34,7 +34,7 @@ app.get('/health', (_req, res) => {
 
 // ── Receive alert from ML model (or test curl) ────────────────────────────────
 app.post('/api/alert', (req, res) => {
-  const { fall_type, pre_activity, post_state, confidence } = req.body;
+  const { fall_type, pre_activity, post_state, confidence, confirmation_window_ms } = req.body;
 
   if (!fall_type || !pre_activity || !post_state || confidence === undefined) {
     return res.status(400).json({
@@ -43,7 +43,10 @@ app.post('/api/alert', (req, res) => {
     });
   }
 
-  const alert = buildAlert({ fall_type, pre_activity, post_state, confidence });
+  // confirmation_window_ms is optional — only present when the ML side ran the
+  // adaptive confirmation window. Passed through to buildAlert() so it appears
+  // in the stored alert and the real-time dashboard broadcast.
+  const alert = buildAlert({ fall_type, pre_activity, post_state, confidence, confirmation_window_ms });
   const { valid, errors } = validateAlert(alert);
 
   if (!valid) {

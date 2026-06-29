@@ -18,3 +18,5 @@ ml/models/
 *.onnx
 *.pt
 *.pth
+
+node_modules
