@@ -2,6 +2,7 @@
 # Real-time inference using ONNX Runtime + HTTP alert dispatch to the backend.
 # Simulation mode: replays fall windows from dataset.csv to test the full pipeline.
 
+import random
 import sys
 import time
 from pathlib import Path
@@ -99,6 +100,38 @@ CONFIRM_TAIL_STILLNESS_MIN = 0.15
 # Where suppressed false-positive events are written for later analysis.
 # This is a plain-text append log: one line per suppressed event.
 SUPPRESSED_LOG_PATH = Path(__file__).parent.parent / "logs" / "suppressed_alerts.log"
+
+# ─── BLE Localization — tunable constants ──────────────────────────────────────
+#
+# ROOMS is the ordered patrol sequence. Add, remove, or reorder rooms here —
+# the patrol logic (threshold comparison, strongest-signal selection) adapts
+# automatically; no other code needs to change.
+ROOMS: list[str] = ["Bedroom", "Living Room", "Kitchen", "Bathroom", "Hallway"]
+
+# BLE MAC address of the specific wearable device paired with this system.
+# In production this would be read from device config or set during onboarding.
+WEARABLE_BLE_ID = "BLE:AA:BB:CC:DD:EE:FF"
+
+# RSSI cutoff (dBm) for confirming same-room proximity.
+# Readings at or above this value indicate the wearable is in the scanned room;
+# readings below indicate the signal is attenuated by one or more walls.
+RSSI_PROXIMITY_THRESHOLD = -65  # dBm
+
+# Simulated RSSI ranges grounded in real-world BLE indoor localization data.
+# Source: UCI/Kaggle "BLE RSSI Dataset for Indoor Localization" and related
+# literature — same-room readings cluster at -40 to -65 dBm; through-wall
+# readings fall to -65 to -100 dBm due to building-material path loss.
+RSSI_SAME_ROOM_MIN  = -65    # dBm — weakest plausible same-room reading
+RSSI_SAME_ROOM_MAX  = -40    # dBm — strongest plausible same-room reading
+RSSI_OTHER_ROOM_MIN = -100   # dBm — most attenuated (many walls) other-room reading
+RSSI_OTHER_ROOM_MAX = -66    # dBm — strongest other-room reading (one thin wall)
+
+# Time the robot spends moving to and scanning each room.
+# Keep short (0.5 s) for unit tests; raise to 3–5 s for a realistic live demo.
+PATROL_DELAY_SECONDS = 0.5   # seconds per room
+
+# Log file recording the full patrol sequence for each confirmed fall event.
+PATROL_LOG_PATH = Path(__file__).parent.parent / "logs" / "patrol_log.txt"
 
 
 def _load_onnx_session(onnx_path: str = None) -> ort.InferenceSession:
@@ -222,15 +255,111 @@ def compute_post_state(signal_after_fall: np.ndarray) -> str:
         return "moving"
 
 
-def send_alert(result: dict, post_state: str, confirmation_window_ms: int | None = None) -> None:
+def simulate_ble_scan(room: str, wearable_id: str, true_room: str) -> float:
+    """
+    Return a simulated BLE RSSI value (dBm) for scanning wearable_id in room.
+
+    In production, replace this function body with a real hardware BLE scan
+    (e.g. bleak.BleakScanner or a UART read from the robot's BLE radio).
+    The surrounding logic — threshold comparison, strongest-signal selection,
+    room registry — stays identical; only this one call changes.
+
+    RSSI ranges are grounded in BLE indoor localization literature:
+    same-room: -40 to -65 dBm; through-wall: -65 to -100 dBm.
+    (Source: UCI/Kaggle "BLE RSSI Dataset for Indoor Localization")
+    """
+    if room == true_room:
+        return random.uniform(RSSI_SAME_ROOM_MIN, RSSI_SAME_ROOM_MAX)
+    return random.uniform(RSSI_OTHER_ROOM_MIN, RSSI_OTHER_ROOM_MAX)
+
+
+def simulate_robot_patrol(wearable_id: str, true_room: str | None = None) -> str:
+    """
+    Simulate a robot patrol that scans for wearable_id's BLE signal across ROOMS
+    and returns the room where the signal is strongest above RSSI_PROXIMITY_THRESHOLD.
+
+    The robot does NOT detect or classify humans — it has no general presence-
+    sensing capability. Its only task is locating the room where THIS specific
+    wearable's BLE MAC address produces the strongest RSSI. Human detection and
+    fall confirmation already happened upstream in the IMU pipeline and adaptive
+    confirmation window.
+
+    Parameters
+    ----------
+    wearable_id : str
+        BLE MAC address of the wearable to locate.
+    true_room : str or None
+        Ground-truth room for the simulation. Chosen randomly from ROOMS when
+        None, representing an unknown real-world scenario.
+
+    Returns
+    -------
+    str
+        Room name from ROOMS, or "location_unknown" if no room cleared
+        RSSI_PROXIMITY_THRESHOLD after a full patrol cycle.
+    """
+    if true_room is None:
+        true_room = random.choice(ROOMS)
+
+    PATROL_LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    ts = time.strftime("%Y-%m-%dT%H:%M:%S")
+    log_lines = [
+        f"\n[{ts}] PATROL START",
+        f"  wearable  : {wearable_id}",
+        f"  true_room : {true_room}",
+        f"  order     : {' -> '.join(ROOMS)}",
+    ]
+
+    best_room: str | None = None
+    best_rssi = float("-inf")
+
+    for room in ROOMS:
+        # Simulated transit + scan delay per room.
+        # In real deployment this represents the robot driving to the room entrance
+        # and dwelling long enough for a reliable RSSI average.
+        time.sleep(PATROL_DELAY_SECONDS)
+
+        rssi = simulate_ble_scan(room, wearable_id, true_room)
+        clears = rssi >= RSSI_PROXIMITY_THRESHOLD
+        tag = "ABOVE THRESHOLD ✓" if clears else "below threshold"
+        log_lines.append(f"  [{room:<12}] RSSI = {rssi:6.1f} dBm  ({tag})")
+
+        if clears and rssi > best_rssi:
+            best_rssi = rssi
+            best_room = room
+
+    if best_room is not None:
+        result_str = best_room
+        log_lines.append(
+            f"  RESULT: located in '{best_room}' (best RSSI = {best_rssi:.1f} dBm)"
+        )
+    else:
+        result_str = "location_unknown"
+        log_lines.append(
+            f"  RESULT: location_unknown — no room cleared threshold "
+            f"({RSSI_PROXIMITY_THRESHOLD} dBm)"
+        )
+
+    log_lines.append(f"[{ts}] PATROL END\n")
+
+    with PATROL_LOG_PATH.open("a", encoding="utf-8") as fh:
+        fh.write("\n".join(log_lines) + "\n")
+
+    print(f"  [PATROL] Wearable located in: {result_str}")
+    return result_str
+
+
+def send_alert(result: dict, post_state: str, confirmation_window_ms: int | None = None, location: str | None = None) -> None:
     """
     POST a fall alert to the backend API.
 
     The backend (Team B) expects:
       { fall_type, pre_activity, post_state, confidence }
-    plus the optional new field:
+    plus optional fields:
       { confirmation_window_ms }  — only present for confirmed falls that passed
                                     the adaptive confirmation window.
+      { location }                — room name from BLE patrol, or "location_unknown".
 
     Handles connection errors gracefully — inference continues even
     when the backend is unreachable (e.g. during standalone testing).
@@ -244,6 +373,9 @@ def send_alert(result: dict, post_state: str, confirmation_window_ms: int | None
     confirmation_window_ms : int or None
         Actual wall-clock duration of the confirmation window in milliseconds.
         Omitted from the payload when None (e.g. if called without the feature).
+    location : str or None
+        Room name returned by simulate_robot_patrol(), or "location_unknown".
+        Omitted when None (e.g. in standalone tests that skip the patrol).
     """
     payload = {
         "fall_type":    result["fall_type"],
@@ -253,6 +385,8 @@ def send_alert(result: dict, post_state: str, confirmation_window_ms: int | None
     }
     if confirmation_window_ms is not None:
         payload["confirmation_window_ms"] = confirmation_window_ms
+    if location is not None:
+        payload["location"] = location
 
     url = f"{BACKEND_URL}/api/alert"
 
@@ -452,7 +586,13 @@ def run_simulation(dataset_csv: str = None) -> None:
         post_signal = np.tile(window, (2, 1))[:300]   # pad to 300 samples
         post_state  = compute_post_state(post_signal)
 
-        send_alert(result, post_state, confirmation_window_ms=conf_window_ms)
+        # ── BLE localization: patrol rooms to find where the wearable is ──
+        # Called AFTER confirmation — does not alter the confirmation logic.
+        # true_room=None lets the simulation pick a random room each run,
+        # representing a real unknown-location scenario.
+        location = simulate_robot_patrol(WEARABLE_BLE_ID)
+
+        send_alert(result, post_state, confirmation_window_ms=conf_window_ms, location=location)
         alerts_sent += 1
 
         # Simulate real-time gap between fall events
