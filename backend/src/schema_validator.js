@@ -4,12 +4,17 @@ const VALID_FALL_TYPES = ['slip', 'trip', 'faint'];
 const VALID_PRE_ACTIVITIES = ['walking', 'standing', 'bending', 'sitting'];
 const VALID_POST_STATES = ['unconscious', 'stunned', 'moving', 'unknown'];
 const VALID_SEVERITIES = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW'];
+const VALID_LOCATIONS = ['Bedroom', 'Living Room', 'Kitchen', 'Bathroom', 'Hallway', 'location_unknown'];
 
 export function validateAlert(alert) {
   const errors = [];
 
   if (!alert || typeof alert !== 'object') {
     return { valid: false, errors: ['Alert must be a non-null object'] };
+  }
+
+  if (alert.location === undefined) {
+    alert.location = 'location_unknown';
   }
 
   // timestamp — must parse as valid date
@@ -63,6 +68,13 @@ export function validateAlert(alert) {
     errors.push('confidence must be a number');
   } else if (alert.confidence < 0 || alert.confidence > 1) {
     errors.push(`confidence ${alert.confidence} must be between 0.0 and 1.0`);
+  }
+
+  // location - optional for older clients/mock emitters; defaults to unknown.
+  if (typeof alert.location !== 'string') {
+    errors.push('location must be a string');
+  } else if (!VALID_LOCATIONS.includes(alert.location)) {
+    errors.push(`location "${alert.location}" must be one of: ${VALID_LOCATIONS.join(', ')}`);
   }
 
   // confirmation_window_ms — optional; only present for alerts that passed through

@@ -15,7 +15,11 @@ function formatTime(isoString) {
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
-const COL_HEADERS = ['Time', 'Severity', 'Fall Type', 'Pre-Activity', 'Post-State', 'Confidence'];
+function formatLocation(location) {
+  return location === 'location_unknown' || !location ? 'Unknown' : location;
+}
+
+const COL_HEADERS = ['Time', 'Location', 'Severity', 'Fall Type', 'Pre-Activity', 'Post-State', 'Confidence'];
 
 export default function HistoryLog({ initialHistory }) {
   const [history, setHistory] = useState([]);
@@ -160,6 +164,7 @@ export default function HistoryLog({ initialHistory }) {
                   }}
                 >
                   <td style={tdStyle}>{formatTime(alert.timestamp)}</td>
+                  <td style={tdStyle}>{formatLocation(alert.location)}</td>
                   <td style={tdStyle}>
                     <span
                       style={{

@@ -33,6 +33,7 @@ export async function initDatabase() {
       fall_type              TEXT    NOT NULL,
       pre_activity           TEXT    NOT NULL,
       post_state             TEXT    NOT NULL,
+      location               TEXT    DEFAULT 'location_unknown',
       severity               TEXT    NOT NULL,
       message                TEXT    NOT NULL,
       confidence             REAL    NOT NULL,
@@ -48,19 +49,24 @@ export async function initDatabase() {
     db.run(`ALTER TABLE alerts ADD COLUMN confirmation_window_ms INTEGER`);
   } catch (_) { /* column already present — nothing to do */ }
 
+  try {
+    db.run(`ALTER TABLE alerts ADD COLUMN location TEXT DEFAULT 'location_unknown'`);
+  } catch (_) { /* column already present - nothing to do */ }
+
   persist();
 }
 
 export function insertAlert(alert) {
   const stmt = db.prepare(`
-    INSERT INTO alerts (timestamp, fall_type, pre_activity, post_state, severity, message, confidence, confirmation_window_ms)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO alerts (timestamp, fall_type, pre_activity, post_state, location, severity, message, confidence, confirmation_window_ms)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   stmt.run([
     alert.timestamp,
     alert.fall_type,
     alert.pre_activity,
     alert.post_state,
+    alert.location ?? 'location_unknown',
     alert.severity,
     alert.message,
     alert.confidence,

@@ -19,6 +19,10 @@ function formatDateTime(isoString) {
   });
 }
 
+function formatLocation(location) {
+  return location === 'location_unknown' || !location ? 'Unknown' : location;
+}
+
 export default function ContextCard() {
   const [latest, setLatest]     = useState(null);
   const [flashing, setFlashing] = useState(false);
@@ -60,6 +64,7 @@ export default function ContextCard() {
   const sc = SEVERITY_COLORS[latest.severity] ?? SEVERITY_COLORS.HIGH;
 
   const dataRows = [
+    { label: 'Location',         value: formatLocation(latest.location) },
     { label: 'Fall Type',        value: latest.fall_type    },
     { label: 'Pre-Activity',     value: latest.pre_activity },
     { label: 'Post-Fall State',  value: latest.post_state   },

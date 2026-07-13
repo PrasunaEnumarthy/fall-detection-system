@@ -14,6 +14,10 @@ function formatTime(isoString) {
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 }
 
+function formatLocation(location) {
+  return location === 'location_unknown' || !location ? 'Unknown' : location;
+}
+
 export default function AlertCard({ alert, isNew }) {
   const sc = SEVERITY_COLORS[alert.severity] ?? SEVERITY_COLORS.HIGH;
   const isLowConf = alert.confidence < 0.70;
@@ -90,6 +94,7 @@ export default function AlertCard({ alert, isNew }) {
       {/* Tag pills */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
         {[
+          `📍 ${formatLocation(alert.location)}`,
           alert.fall_type,
           alert.pre_activity,
           alert.post_state,

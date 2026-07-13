@@ -196,17 +196,18 @@ function deriveSeverity(fall_type, post_state) {
 //             The 0.70 threshold was chosen as the minimum acceptable confidence
 //             for acting on an automated alert without additional verification.
 // ─────────────────────────────────────────────────────────────────────────────
-function buildMessage(fall_type, pre_activity, post_state, confidence) {
+function buildMessage(fall_type, pre_activity, post_state, confidence, location) {
   // Step 1: Resolve each ML label to its human-readable phrase.
   // ?? provides a safe fallback if the model returns an unexpected label.
   const fallPhrase     = FALL_TYPE_PHRASES[fall_type]       ?? 'Patient fell';       // fallback if unknown fall_type
   const activityPhrase = PRE_ACTIVITY_PHRASES[pre_activity] ?? '';                   // fallback: blank (activity phrase is optional context)
   const statePhrase    = POST_STATE_PHRASES[post_state]     ?? 'Status unknown.';    // fallback if unknown post_state
+  const locationPhrase = location && location !== 'location_unknown' ? ` in the ${location}` : '';
 
   // Step 2: Combine the three phrases into one sentence.
   // Template: "[how they fell] [what they were doing]. [what they're doing now]"
   // Example:  "Patient tripped while walking. No movement for over 15 seconds — may be unconscious."
-  let message = `${fallPhrase} ${activityPhrase}. ${statePhrase}`;
+  let message = `${fallPhrase}${locationPhrase} ${activityPhrase}. ${statePhrase}`;
 
   // Step 3: If the model's confidence is below 70%, append a manual-verify warning.
   // This protects against false positives causing unnecessary panic, and false
@@ -260,13 +261,14 @@ function buildMessage(fall_type, pre_activity, post_state, confidence) {
 export function buildAlert(raw) {
   // Step 1: Pull out the four ML output fields plus the optional confirmation field.
   const { fall_type, pre_activity, post_state, confidence, confirmation_window_ms } = raw;
+  const location = raw.location ?? 'location_unknown';
 
   // Step 2: Determine how urgent this alert is using the severity matrix.
   // This drives the colour coding on the dashboard (red = CRITICAL, orange = HIGH, yellow = MEDIUM).
   const severity = deriveSeverity(fall_type, post_state);
 
   // Step 3: Build the human-readable message that the caretaker will read.
-  const message = buildMessage(fall_type, pre_activity, post_state, confidence);
+  const message = buildMessage(fall_type, pre_activity, post_state, confidence, location);
 
   // Step 4: Record when this alert was created.
   // ISO format (e.g. "2026-06-09T14:32:01.000Z") ensures consistent sorting
@@ -281,6 +283,7 @@ export function buildAlert(raw) {
     fall_type,    // how they fell — stored for filtering/stats in dashboard
     pre_activity, // what they were doing — stored for incident report generation
     post_state,   // condition after fall — stored for filtering/stats
+    location,     // room detected by the patrol simulation, or location_unknown
     severity,     // CRITICAL / HIGH / MEDIUM — drives UI colour + sort order
     message,      // the sentence shown to the caretaker
     confidence,   // shown in the detail view so caretaker can judge reliability
