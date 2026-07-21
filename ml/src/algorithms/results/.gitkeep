@@ -1,0 +1,9 @@
+# results/
+# This directory is populated at runtime by run_algo.py and compare_models.py.
+#
+# Expected files after running all three models:
+#   lstm_metrics.json
+#   gru_metrics.json
+#   transformer_metrics.json
+#   comparison_table.csv
+#   comparison_table.md

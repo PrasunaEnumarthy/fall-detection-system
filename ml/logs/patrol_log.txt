@@ -8071,3 +8071,1004 @@
   RESULT: located in 'Living Room' (best RSSI = -63.0 dBm)
 [2026-07-13T15:47:32] PATROL END
 
+
+[2026-07-13T15:47:40] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -41.2 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -79.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -68.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -90.0 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -41.2 dBm)
+[2026-07-13T15:47:40] PATROL END
+
+
+[2026-07-13T15:47:46] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -84.5 dBm  (below threshold)
+  [Living Room ] RSSI =  -55.7 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -97.2 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -85.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -84.3 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -55.7 dBm)
+[2026-07-13T15:47:46] PATROL END
+
+
+[2026-07-13T15:47:52] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -59.7 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -73.5 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -79.3 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -91.7 dBm  (below threshold)
+  [Hallway     ] RSSI =  -69.5 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -59.7 dBm)
+[2026-07-13T15:47:52] PATROL END
+
+
+[2026-07-13T15:47:57] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -74.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -97.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -71.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -66.3 dBm  (below threshold)
+  [Hallway     ] RSSI =  -44.9 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -44.9 dBm)
+[2026-07-13T15:47:57] PATROL END
+
+
+[2026-07-13T15:48:03] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -80.4 dBm  (below threshold)
+  [Living Room ] RSSI =  -93.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -93.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -91.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -41.2 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -41.2 dBm)
+[2026-07-13T15:48:03] PATROL END
+
+
+[2026-07-13T15:48:08] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -90.7 dBm  (below threshold)
+  [Living Room ] RSSI =  -71.0 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -70.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -42.7 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -67.0 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -42.7 dBm)
+[2026-07-13T15:48:08] PATROL END
+
+
+[2026-07-13T15:48:14] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -74.8 dBm  (below threshold)
+  [Living Room ] RSSI =  -70.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -81.3 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -48.6 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -90.2 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -48.6 dBm)
+[2026-07-13T15:48:14] PATROL END
+
+
+[2026-07-13T15:48:20] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -69.1 dBm  (below threshold)
+  [Living Room ] RSSI =  -59.1 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -96.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -91.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -71.6 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -59.1 dBm)
+[2026-07-13T15:48:20] PATROL END
+
+
+[2026-07-13T15:48:26] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -67.4 dBm  (below threshold)
+  [Living Room ] RSSI =  -98.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -86.2 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -63.7 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -67.3 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -63.7 dBm)
+[2026-07-13T15:48:26] PATROL END
+
+
+[2026-07-13T15:48:34] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -41.9 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -79.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -71.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -68.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -83.6 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -41.9 dBm)
+[2026-07-13T15:48:34] PATROL END
+
+
+[2026-07-13T15:48:43] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -92.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -67.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -95.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -49.1 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -85.1 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -49.1 dBm)
+[2026-07-13T15:48:43] PATROL END
+
+
+[2026-07-13T15:48:50] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -96.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -94.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -78.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -45.2 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -87.8 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -45.2 dBm)
+[2026-07-13T15:48:50] PATROL END
+
+
+[2026-07-13T15:48:59] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -70.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -92.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -80.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -40.9 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -81.2 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -40.9 dBm)
+[2026-07-13T15:48:59] PATROL END
+
+
+[2026-07-13T15:49:04] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -90.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -74.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -76.3 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -50.4 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -84.5 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -50.4 dBm)
+[2026-07-13T15:49:04] PATROL END
+
+
+[2026-07-13T15:49:10] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -54.2 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -88.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -73.8 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -90.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -77.4 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -54.2 dBm)
+[2026-07-13T15:49:10] PATROL END
+
+
+[2026-07-13T15:49:19] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -82.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -60.0 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -70.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -88.7 dBm  (below threshold)
+  [Hallway     ] RSSI =  -66.8 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -60.0 dBm)
+[2026-07-13T15:49:19] PATROL END
+
+
+[2026-07-13T15:49:26] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -68.4 dBm  (below threshold)
+  [Living Room ] RSSI =  -72.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -64.4 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -96.4 dBm  (below threshold)
+  [Hallway     ] RSSI =  -89.8 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -64.4 dBm)
+[2026-07-13T15:49:26] PATROL END
+
+
+[2026-07-13T15:49:33] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -67.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -82.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -97.8 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -98.3 dBm  (below threshold)
+  [Hallway     ] RSSI =  -60.4 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -60.4 dBm)
+[2026-07-13T15:49:33] PATROL END
+
+
+[2026-07-13T15:49:39] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -90.0 dBm  (below threshold)
+  [Living Room ] RSSI =  -48.5 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -85.3 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -68.8 dBm  (below threshold)
+  [Hallway     ] RSSI =  -86.2 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -48.5 dBm)
+[2026-07-13T15:49:39] PATROL END
+
+
+[2026-07-13T15:49:44] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -75.5 dBm  (below threshold)
+  [Living Room ] RSSI =  -88.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -75.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -41.8 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -84.8 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -41.8 dBm)
+[2026-07-13T15:49:44] PATROL END
+
+
+[2026-07-13T15:49:50] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -82.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -73.0 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -89.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -78.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -40.3 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -40.3 dBm)
+[2026-07-13T15:49:50] PATROL END
+
+
+[2026-07-13T15:49:55] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -76.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -88.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -68.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -47.6 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -96.6 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -47.6 dBm)
+[2026-07-13T15:49:55] PATROL END
+
+
+[2026-07-13T15:50:02] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -76.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -96.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -91.3 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -44.3 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -82.9 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -44.3 dBm)
+[2026-07-13T15:50:02] PATROL END
+
+
+[2026-07-13T15:50:08] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -56.6 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -70.2 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -72.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -76.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -66.9 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -56.6 dBm)
+[2026-07-13T15:50:08] PATROL END
+
+
+[2026-07-13T15:50:15] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -86.4 dBm  (below threshold)
+  [Living Room ] RSSI =  -96.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -48.9 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -83.8 dBm  (below threshold)
+  [Hallway     ] RSSI =  -76.9 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -48.9 dBm)
+[2026-07-13T15:50:15] PATROL END
+
+
+[2026-07-13T15:50:24] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -85.6 dBm  (below threshold)
+  [Living Room ] RSSI =  -81.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -79.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -61.5 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -78.2 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -61.5 dBm)
+[2026-07-13T15:50:24] PATROL END
+
+
+[2026-07-13T15:50:33] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -40.1 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -91.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -94.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -96.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -98.6 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -40.1 dBm)
+[2026-07-13T15:50:33] PATROL END
+
+
+[2026-07-13T15:50:38] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -40.2 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -95.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -88.0 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -81.4 dBm  (below threshold)
+  [Hallway     ] RSSI =  -95.0 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -40.2 dBm)
+[2026-07-13T15:50:38] PATROL END
+
+
+[2026-07-13T15:50:44] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -58.3 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -66.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -72.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -79.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -73.2 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -58.3 dBm)
+[2026-07-13T15:50:44] PATROL END
+
+
+[2026-07-13T15:50:50] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -43.5 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -95.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -95.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -81.5 dBm  (below threshold)
+  [Hallway     ] RSSI =  -71.7 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -43.5 dBm)
+[2026-07-13T15:50:50] PATROL END
+
+
+[2026-07-13T15:50:55] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -89.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -69.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -56.2 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -74.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -78.5 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -56.2 dBm)
+[2026-07-13T15:50:55] PATROL END
+
+
+[2026-07-13T15:51:01] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -87.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -75.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -55.1 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -80.4 dBm  (below threshold)
+  [Hallway     ] RSSI =  -85.7 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -55.1 dBm)
+[2026-07-13T15:51:01] PATROL END
+
+
+[2026-07-13T15:51:06] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -77.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -48.3 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -71.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -70.0 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -48.3 dBm)
+[2026-07-13T15:51:06] PATROL END
+
+
+[2026-07-13T15:51:12] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -62.5 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -69.5 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -82.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -96.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -80.9 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -62.5 dBm)
+[2026-07-13T15:51:12] PATROL END
+
+
+[2026-07-13T15:51:18] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -62.6 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -84.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -96.7 dBm  (below threshold)
+  [Hallway     ] RSSI =  -70.2 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -62.6 dBm)
+[2026-07-13T15:51:18] PATROL END
+
+
+[2026-07-13T15:51:23] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -85.8 dBm  (below threshold)
+  [Living Room ] RSSI =  -52.8 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -94.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -91.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -94.4 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -52.8 dBm)
+[2026-07-13T15:51:23] PATROL END
+
+
+[2026-07-13T15:51:29] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -60.6 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -79.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -85.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -74.5 dBm  (below threshold)
+  [Hallway     ] RSSI =  -90.1 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -60.6 dBm)
+[2026-07-13T15:51:29] PATROL END
+
+
+[2026-07-13T15:51:38] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -94.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -78.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -93.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -41.7 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -87.9 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -41.7 dBm)
+[2026-07-13T15:51:38] PATROL END
+
+
+[2026-07-13T15:51:46] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -50.0 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -96.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -87.2 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -76.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -66.3 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -50.0 dBm)
+[2026-07-13T15:51:46] PATROL END
+
+
+[2026-07-13T15:51:53] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -94.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -87.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -73.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -62.5 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -80.3 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -62.5 dBm)
+[2026-07-13T15:51:53] PATROL END
+
+
+[2026-07-13T15:51:59] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -95.1 dBm  (below threshold)
+  [Living Room ] RSSI =  -67.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -53.6 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -87.5 dBm  (below threshold)
+  [Hallway     ] RSSI =  -69.1 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -53.6 dBm)
+[2026-07-13T15:51:59] PATROL END
+
+
+[2026-07-13T15:52:08] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -72.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -95.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -86.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -62.4 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -62.4 dBm)
+[2026-07-13T15:52:08] PATROL END
+
+
+[2026-07-13T15:52:13] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -90.7 dBm  (below threshold)
+  [Living Room ] RSSI =  -89.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -67.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -58.1 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -79.1 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -58.1 dBm)
+[2026-07-13T15:52:13] PATROL END
+
+
+[2026-07-13T15:52:19] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -70.0 dBm  (below threshold)
+  [Living Room ] RSSI =  -88.2 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -68.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -56.4 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -74.0 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -56.4 dBm)
+[2026-07-13T15:52:19] PATROL END
+
+
+[2026-07-13T15:52:25] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -60.4 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -97.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -90.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -91.8 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -60.4 dBm)
+[2026-07-13T15:52:25] PATROL END
+
+
+[2026-07-13T15:52:32] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -79.6 dBm  (below threshold)
+  [Living Room ] RSSI =  -70.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -86.0 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -93.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -63.4 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -63.4 dBm)
+[2026-07-13T15:52:32] PATROL END
+
+
+[2026-07-13T15:52:37] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -68.4 dBm  (below threshold)
+  [Living Room ] RSSI =  -75.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -70.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -74.4 dBm  (below threshold)
+  [Hallway     ] RSSI =  -48.2 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -48.2 dBm)
+[2026-07-13T15:52:37] PATROL END
+
+
+[2026-07-14T16:02:48] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -52.6 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -79.2 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -76.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -87.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -72.2 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -52.6 dBm)
+[2026-07-14T16:02:48] PATROL END
+
+
+[2026-07-14T16:02:58] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -77.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -82.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -73.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -75.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -62.3 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -62.3 dBm)
+[2026-07-14T16:02:58] PATROL END
+
+
+[2026-07-14T16:03:08] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -64.6 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -90.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -67.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -70.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -88.5 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -64.6 dBm)
+[2026-07-14T16:03:08] PATROL END
+
+
+[2026-07-14T16:14:48] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -77.7 dBm  (below threshold)
+  [Living Room ] RSSI =  -56.5 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -90.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -67.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -82.9 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -56.5 dBm)
+[2026-07-14T16:14:48] PATROL END
+
+
+[2026-07-14T16:14:58] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -98.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -48.3 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -73.0 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -96.8 dBm  (below threshold)
+  [Hallway     ] RSSI =  -99.6 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -48.3 dBm)
+[2026-07-14T16:14:58] PATROL END
+
+
+[2026-07-14T16:15:07] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -80.1 dBm  (below threshold)
+  [Living Room ] RSSI =  -89.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -83.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -98.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -52.0 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -52.0 dBm)
+[2026-07-14T16:15:07] PATROL END
+
+
+[2026-07-14T16:15:17] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -85.5 dBm  (below threshold)
+  [Living Room ] RSSI =  -49.5 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -99.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -83.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -74.1 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -49.5 dBm)
+[2026-07-14T16:15:17] PATROL END
+
+
+[2026-07-14T16:15:27] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -53.4 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -85.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -88.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -75.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -91.7 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -53.4 dBm)
+[2026-07-14T16:15:27] PATROL END
+
+
+[2026-07-14T16:15:36] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -86.7 dBm  (below threshold)
+  [Living Room ] RSSI =  -72.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -52.1 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -98.2 dBm  (below threshold)
+  [Hallway     ] RSSI =  -80.0 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -52.1 dBm)
+[2026-07-14T16:15:36] PATROL END
+
+
+[2026-07-14T16:15:46] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -80.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -73.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -45.5 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -67.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -85.5 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -45.5 dBm)
+[2026-07-14T16:15:46] PATROL END
+
+
+[2026-07-14T16:15:56] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -74.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -84.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -45.9 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -74.8 dBm  (below threshold)
+  [Hallway     ] RSSI =  -77.7 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -45.9 dBm)
+[2026-07-14T16:15:56] PATROL END
+
+
+[2026-07-14T16:16:06] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -87.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -83.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -74.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -92.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -51.0 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -51.0 dBm)
+[2026-07-14T16:16:06] PATROL END
+
+
+[2026-07-14T16:16:15] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -97.5 dBm  (below threshold)
+  [Living Room ] RSSI =  -68.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -75.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -74.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -52.4 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -52.4 dBm)
+[2026-07-14T16:16:15] PATROL END
+
+
+[2026-07-14T16:16:25] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -61.5 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -85.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -66.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -85.5 dBm  (below threshold)
+  [Hallway     ] RSSI =  -87.4 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -61.5 dBm)
+[2026-07-14T16:16:25] PATROL END
+
+
+[2026-07-14T16:16:35] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -95.3 dBm  (below threshold)
+  [Living Room ] RSSI =  -74.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -44.6 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -77.3 dBm  (below threshold)
+  [Hallway     ] RSSI =  -87.2 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -44.6 dBm)
+[2026-07-14T16:16:35] PATROL END
+
+
+[2026-07-14T16:16:44] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -95.0 dBm  (below threshold)
+  [Living Room ] RSSI =  -79.8 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -89.9 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -48.2 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -89.3 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -48.2 dBm)
+[2026-07-14T16:16:44] PATROL END
+
+
+[2026-07-14T16:16:54] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -46.4 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -69.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -75.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -79.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -80.0 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -46.4 dBm)
+[2026-07-14T16:16:54] PATROL END
+
+
+[2026-07-14T16:17:04] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -93.8 dBm  (below threshold)
+  [Living Room ] RSSI =  -92.7 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -55.3 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -86.3 dBm  (below threshold)
+  [Hallway     ] RSSI =  -98.6 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -55.3 dBm)
+[2026-07-14T16:17:04] PATROL END
+
+
+[2026-07-14T16:17:14] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -43.5 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -69.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -99.8 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -68.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -80.9 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -43.5 dBm)
+[2026-07-14T16:17:14] PATROL END
+
+
+[2026-07-14T16:17:23] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -86.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -88.3 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -75.7 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -44.0 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -98.9 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -44.0 dBm)
+[2026-07-14T16:17:23] PATROL END
+
+
+[2026-07-14T16:17:33] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -76.6 dBm  (below threshold)
+  [Living Room ] RSSI =  -52.6 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -75.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -83.3 dBm  (below threshold)
+  [Hallway     ] RSSI =  -88.5 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -52.6 dBm)
+[2026-07-14T16:17:33] PATROL END
+
+
+[2026-07-14T16:17:43] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bedroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -46.5 dBm  (ABOVE THRESHOLD ✓)
+  [Living Room ] RSSI =  -83.5 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -75.0 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -71.5 dBm  (below threshold)
+  [Hallway     ] RSSI =  -74.8 dBm  (below threshold)
+  RESULT: located in 'Bedroom' (best RSSI = -46.5 dBm)
+[2026-07-14T16:17:43] PATROL END
+
+
+[2026-07-14T16:17:52] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -75.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -97.4 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -68.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -50.1 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -94.2 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -50.1 dBm)
+[2026-07-14T16:17:52] PATROL END
+
+
+[2026-07-14T16:18:02] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -75.2 dBm  (below threshold)
+  [Living Room ] RSSI =  -82.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -78.6 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -89.1 dBm  (below threshold)
+  [Hallway     ] RSSI =  -57.2 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -57.2 dBm)
+[2026-07-14T16:18:02] PATROL END
+
+
+[2026-07-14T16:24:51] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -79.7 dBm  (below threshold)
+  [Living Room ] RSSI =  -76.1 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -57.9 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -90.7 dBm  (below threshold)
+  [Hallway     ] RSSI =  -75.5 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -57.9 dBm)
+[2026-07-14T16:24:51] PATROL END
+
+
+[2026-07-14T16:31:23] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Kitchen
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -95.1 dBm  (below threshold)
+  [Living Room ] RSSI =  -99.0 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -40.0 dBm  (ABOVE THRESHOLD ✓)
+  [Bathroom    ] RSSI =  -73.9 dBm  (below threshold)
+  [Hallway     ] RSSI =  -82.6 dBm  (below threshold)
+  RESULT: located in 'Kitchen' (best RSSI = -40.0 dBm)
+[2026-07-14T16:31:23] PATROL END
+
+
+[2026-07-14T16:31:35] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -85.5 dBm  (below threshold)
+  [Living Room ] RSSI =  -58.4 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -78.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -94.6 dBm  (below threshold)
+  [Hallway     ] RSSI =  -91.3 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -58.4 dBm)
+[2026-07-14T16:31:35] PATROL END
+
+
+[2026-07-14T16:31:44] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Bathroom
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -96.1 dBm  (below threshold)
+  [Living Room ] RSSI =  -84.9 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -73.5 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -60.0 dBm  (ABOVE THRESHOLD ✓)
+  [Hallway     ] RSSI =  -68.8 dBm  (below threshold)
+  RESULT: located in 'Bathroom' (best RSSI = -60.0 dBm)
+[2026-07-14T16:31:44] PATROL END
+
+
+[2026-07-14T16:31:57] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Hallway
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -87.9 dBm  (below threshold)
+  [Living Room ] RSSI =  -90.6 dBm  (below threshold)
+  [Kitchen     ] RSSI =  -72.1 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -73.0 dBm  (below threshold)
+  [Hallway     ] RSSI =  -60.0 dBm  (ABOVE THRESHOLD ✓)
+  RESULT: located in 'Hallway' (best RSSI = -60.0 dBm)
+[2026-07-14T16:31:57] PATROL END
+
+
+[2026-07-14T21:03:29] PATROL START
+  wearable  : BLE:AA:BB:CC:DD:EE:FF
+  true_room : Living Room
+  order     : Bedroom -> Living Room -> Kitchen -> Bathroom -> Hallway
+  [Bedroom     ] RSSI =  -77.6 dBm  (below threshold)
+  [Living Room ] RSSI =  -46.9 dBm  (ABOVE THRESHOLD ✓)
+  [Kitchen     ] RSSI =  -86.4 dBm  (below threshold)
+  [Bathroom    ] RSSI =  -94.4 dBm  (below threshold)
+  [Hallway     ] RSSI =  -82.7 dBm  (below threshold)
+  RESULT: located in 'Living Room' (best RSSI = -46.9 dBm)
+[2026-07-14T21:03:29] PATROL END
+
